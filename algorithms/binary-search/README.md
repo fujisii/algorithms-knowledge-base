@@ -42,4 +42,4 @@ Step 3: left=3 > right=2 → ループ終了 → return -1
 
 ## 参考文献
 
-- Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). *Introduction to Algorithms* (4th ed.), Section 2.3. MIT Press.
+- Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). *Introduction to Algorithms* (4th ed.), Chapter 2. MIT Press.

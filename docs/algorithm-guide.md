@@ -40,7 +40,7 @@ Step 1: left=0, right=4, mid=2, arr[2]=5 → 一致
 実装上の注意点・落とし穴・ハマりやすい点を記述する。テンプレートの TODO を削除して実際の内容を書く。
 
 ### 参考文献
-一次ソース（教科書・論文・公式ドキュメント）を最低1件記載する。URLのみの記述は避け、著者名・タイトル・章を含める。
+一次ソース（教科書・論文・公式ドキュメント）を最低1件記載する。ソース種別によって書式と URL の要否が異なる（下記「参考文献の記載形式」を参照）。
 
 ## 一次ソース選定指針
 
@@ -53,6 +53,51 @@ Step 1: left=0, right=4, mid=2, arr[2]=5 → 一致
 避けるべき:
 - Wikipedia 単独引用（一次ソースが明示されていない場合）
 - 個人ブログ（一次ソースが不明なもの）
+
+## 参考文献の記載形式
+
+ソース種別ごとに書式と URL の要否が異なる。
+
+### 教科書・書籍（URL なし）
+
+出版社ページや購入リンクは参照先として意味がないため URL は付けない。著者・タイトル・版・該当箇所（章・節・ページ）・出版社を記載する。
+
+```
+- 著者名. (出版年). *タイトル* (版), Section X.X / Chapter X / p.XXX. 出版社.
+```
+
+**例:**
+```
+- Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). *Introduction to Algorithms* (4th ed.), Section 2.1. MIT Press.
+- Sedgewick, R., & Wayne, K. (2011). *Algorithms* (4th ed.), Section 2.1. Addison-Wesley Professional.
+```
+
+### 論文（DOI URL あり）
+
+DOI は永続識別子であり参照先として安定しているため、DOI URL を付ける。
+
+```
+- 著者名. (出版年). "論文タイトル". *ジャーナル名*, vol(issue), pp.XXX–XXX. https://doi.org/xxxxx
+```
+
+**例:**
+```
+- Dijkstra, E. W. (1959). "A note on two problems in connexion with graphs". *Numerische Mathematik*, 1(1), pp.269–271. https://doi.org/10.1007/BF01386390
+```
+
+### 公式ドキュメント（URL あり）
+
+言語仕様・標準ライブラリ・RFC 等の公式ドキュメントは URL を付ける。アクセス年も記載する。
+
+```
+- 組織名. (アクセス年). "ページタイトル". URL
+```
+
+**例:**
+```
+- Go Authors. (2024). "Package sort — Go standard library". https://pkg.go.dev/sort
+- IETF. (2024). "RFC 4122: A Universally Unique IDentifier (UUID) URN Namespace". https://www.rfc-editor.org/rfc/rfc4122
+```
 
 ## テストケース設計方針
 
