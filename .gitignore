@@ -207,3 +207,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Go build artifacts
+algorithms/*/go/*.test
