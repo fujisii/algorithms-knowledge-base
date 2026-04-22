@@ -1,4 +1,4 @@
-type Item = { weight: number; value: number }
+export type Item = { weight: number; value: number }
 
 export function knapsack(items: Item[], capacity: number): number {
   const n = items.length

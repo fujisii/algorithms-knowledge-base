@@ -39,4 +39,19 @@ describe('dijkstra', () => {
     const dist = dijkstra(graph, 1)
     expect(dist.get(1)).toBe(0)
   })
+
+  it('正常系: 等コストの並列経路で最短距離を正しく選ぶ', () => {
+    // 1→2→4 (1+3=4) と 1→3→4 (2+2=4) が同コスト
+    const graph: WeightedGraph = new Map([
+      [1, [{ to: 2, weight: 1 }, { to: 3, weight: 2 }]],
+      [2, [{ to: 4, weight: 3 }]],
+      [3, [{ to: 4, weight: 2 }]],
+      [4, []],
+    ])
+    const dist = dijkstra(graph, 1)
+    expect(dist.get(1)).toBe(0)
+    expect(dist.get(2)).toBe(1)
+    expect(dist.get(3)).toBe(2)
+    expect(dist.get(4)).toBe(4)
+  })
 })

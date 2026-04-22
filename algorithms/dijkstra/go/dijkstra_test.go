@@ -46,6 +46,18 @@ func TestDijkstra(t *testing.T) {
 			start: 1,
 			want:  map[int]int{1: 0},
 		},
+		{
+			name: "正常系: 等コストの並列経路で最短距離を正しく選ぶ",
+			// 1→2→4 (1+3=4) と 1→3→4 (2+2=4) が同コスト
+			graph: map[int][]Edge{
+				1: {{To: 2, Weight: 1}, {To: 3, Weight: 2}},
+				2: {{To: 4, Weight: 3}},
+				3: {{To: 4, Weight: 2}},
+				4: {},
+			},
+			start: 1,
+			want:  map[int]int{1: 0, 2: 1, 3: 2, 4: 4},
+		},
 	}
 
 	for _, tt := range tests {
