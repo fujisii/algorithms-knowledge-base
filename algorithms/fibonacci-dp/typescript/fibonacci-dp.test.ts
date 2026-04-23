@@ -17,4 +17,7 @@ describe('fibonacci', () => {
   it('正常系: n=20 は 6765 を返す', () => {
     expect(fibonacci(20)).toBe(6765)
   })
+  it('エラー: n < 0 は RangeError を投げる', () => {
+    expect(() => fibonacci(-1)).toThrow(RangeError)
+  })
 })

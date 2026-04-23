@@ -1,4 +1,4 @@
-export function dfs(graph: Map<number, number[]>, start: number): number[] {
+export function dfs(graph: ReadonlyMap<number, readonly number[]>, start: number): number[] {
   const visited = new Set<number>()
   const result: number[] = []
 

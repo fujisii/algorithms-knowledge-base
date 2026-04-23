@@ -1,12 +1,13 @@
-export function bfs(graph: Map<number, number[]>, start: number): number[] {
+export function bfs(graph: ReadonlyMap<number, readonly number[]>, start: number): number[] {
   const visited = new Set<number>()
   const queue: number[] = [start]
+  let head = 0
   const result: number[] = []
 
   visited.add(start)
 
-  while (queue.length > 0) {
-    const node = queue.shift()!
+  while (head < queue.length) {
+    const node = queue[head++]
     result.push(node)
 
     const neighbors = graph.get(node) ?? []

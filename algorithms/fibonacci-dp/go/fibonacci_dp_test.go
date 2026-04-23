@@ -23,3 +23,12 @@ func TestFibonacci(t *testing.T) {
 		})
 	}
 }
+
+func TestFibonacciPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Error("n < 0 でパニックが発生するべき")
+		}
+	}()
+	Fibonacci(-1)
+}

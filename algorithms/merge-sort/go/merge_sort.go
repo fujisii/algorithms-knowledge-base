@@ -2,7 +2,7 @@ package main
 
 func MergeSort(arr []int) []int {
 	if len(arr) <= 1 {
-		return arr
+		return append([]int{}, arr...)
 	}
 
 	mid := len(arr) / 2

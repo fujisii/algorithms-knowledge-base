@@ -43,6 +43,12 @@ for algo_dir in "$ALGORITHMS_DIR"/*/; do
     errors+=("未置換プレースホルダーが残っています: $placeholders")
   fi
 
+  if grep -q "^## 参考文献" "$readme"; then
+    if grep -A 10 "^## 参考文献" "$readme" | grep -q "TODO"; then
+      errors+=("参考文献セクションに TODO が残っています")
+    fi
+  fi
+
   if [ "${#errors[@]}" -gt 0 ]; then
     echo "FAILED: $name"
     for e in "${errors[@]}"; do

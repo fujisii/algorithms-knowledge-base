@@ -9,6 +9,13 @@ if [ $# -eq 0 ]; then
 fi
 
 NAME="$1"
+
+if [[ ! "$NAME" =~ ^[a-z0-9-]+$ ]]; then
+  echo "Error: name must be kebab-case (lowercase letters, digits, and hyphens only)"
+  echo "  Example: $(basename "$0") binary-search"
+  exit 1
+fi
+
 ALGO_DIR="$REPO_ROOT/algorithms/$NAME"
 TEMPLATES_DIR="$REPO_ROOT/templates"
 

@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type UnionFind struct {
 	parent []int
 	rank   []int
@@ -15,6 +17,9 @@ func NewUnionFind(size int) *UnionFind {
 }
 
 func (uf *UnionFind) Find(x int) int {
+	if x < 0 || x >= len(uf.parent) {
+		panic(fmt.Sprintf("index %d out of range [0, %d)", x, len(uf.parent)))
+	}
 	if uf.parent[x] != x {
 		uf.parent[x] = uf.Find(uf.parent[x])
 	}

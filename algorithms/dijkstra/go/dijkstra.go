@@ -58,6 +58,9 @@ func Dijkstra(graph map[int][]Edge, start int) map[int]int {
 			continue
 		}
 		for _, e := range graph[u] {
+			if du > math.MaxInt-e.Weight {
+				continue
+			}
 			newDist := du + e.Weight
 			if newDist < dist[e.To] {
 				dist[e.To] = newDist

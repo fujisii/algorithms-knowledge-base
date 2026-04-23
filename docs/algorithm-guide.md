@@ -5,8 +5,8 @@
 | 難易度 | 定義 | 例 |
 |--------|------|-----|
 | Easy | 単一ループまたは再帰で実装可能。データ構造の選択が自明 | Binary Search, Bubble Sort, Fibonacci DP |
-| Medium | 複数のデータ構造を組み合わせる・再帰 + 状態管理が必要 | Quick Sort, BFS, DFS, Union-Find, 0/1 Knapsack |
-| Hard | グラフアルゴリズム・動的計画法・複雑な状態空間を扱う | Dijkstra, Merge Sort |
+| Medium | 複数のデータ構造を組み合わせる・再帰 + 状態管理が必要 | Quick Sort, Merge Sort, BFS, DFS, Union-Find, 0/1 Knapsack |
+| Hard | グラフアルゴリズム・動的計画法・複雑な状態空間を扱う | Dijkstra |
 
 ## README 各セクションの書き方
 
@@ -110,7 +110,7 @@ DOI は永続識別子であり参照先として安定しているため、DOI 
 | グラフ系 | BFS / DFS | 正常系、単一ノード、到達不可能なノードが含まれる、閉路あり |
 | 重み付きグラフ | Dijkstra | 正常系、単一ノード（距離0）、到達不可能なノード（Infinity） |
 | 集合系 | Union-Find | 全要素独立状態、union 後の connected、全要素同一集合 |
-| DP 系 | Fibonacci DP | n=0、n=1、n=10 以上 |
+| DP 系 | Fibonacci DP | n=0、n=1、n=10 以上、n < 0（エラー） |
 | DP 系 | 0/1 Knapsack | 正常系、空アイテムリスト、capacity=0、全アイテムが容量超過 |
 
 ### テスト構造（TypeScript）
