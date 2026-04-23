@@ -12,11 +12,22 @@ Union-Find（Disjoint Set Union、DSU とも呼ぶ）は、要素の集合をグ
 
 **パス圧縮（Path Compression）**: `find` で根を辿る途中のすべてのノードを直接根に接続し直す。次回以降の `find` が O(1) で完了するようになる。
 
+パス圧縮 before（find(1) 呼び出し前）:
+
+```mermaid
+graph TD
+    R((root)) --> C((3))
+    C --> B((2))
+    B --> A((1))
 ```
-before find(4):  1 → 2 → 3 → root
-after find(4):   1 → root
-                 2 → root
-                 3 → root
+
+パス圧縮 after（find(1) 呼び出し後）:
+
+```mermaid
+graph TD
+    R((root)) --> A((1))
+    R --> B((2))
+    R --> C((3))
 ```
 
 **Union by Rank**: 浅い木を深い木の子につなぐことで、木の高さが O(log n) 以上に伸びるのを防ぐ。パス圧縮と組み合わせると、操作あたりの償却計算量がほぼ O(1)（逆アッカーマン関数 α(n)）になる。
