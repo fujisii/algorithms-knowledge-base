@@ -1,11 +1,16 @@
 package main
 
+import "fmt"
+
 type Item struct {
 	Weight int
 	Value  int
 }
 
 func Knapsack(items []Item, capacity int) int {
+	if capacity < 0 {
+		panic(fmt.Sprintf("capacity must be >= 0, got %d", capacity))
+	}
 	n := len(items)
 	dp := make([][]int, n+1)
 	for i := range dp {

@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestKnapsack(t *testing.T) {
 	tests := []struct {
@@ -45,6 +48,12 @@ func TestKnapsack(t *testing.T) {
 			3,
 			15,
 		},
+		{
+			"境界: weight=0 のアイテムは容量 0 でも選択可能",
+			[]Item{{Weight: 0, Value: 5}},
+			0,
+			5,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -54,4 +63,17 @@ func TestKnapsack(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestKnapsackPanic(t *testing.T) {
+	defer func() {
+		r := recover()
+		if r == nil {
+			t.Error("capacity < 0 でパニックが発生するべき")
+		}
+		if msg, ok := r.(string); ok && !strings.Contains(msg, "capacity must be >= 0") {
+			t.Errorf("予期しないパニックメッセージ: %v", r)
+		}
+	}()
+	Knapsack([]Item{}, -1)
 }

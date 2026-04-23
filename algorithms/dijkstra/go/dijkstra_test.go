@@ -69,3 +69,15 @@ func TestDijkstra(t *testing.T) {
 		})
 	}
 }
+
+func TestDijkstraNegativeWeightPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Error("負の辺の重みでパニックが発生するべき")
+		}
+	}()
+	graph := map[int][]Edge{
+		1: {{To: 2, Weight: -1}},
+	}
+	Dijkstra(graph, 1)
+}

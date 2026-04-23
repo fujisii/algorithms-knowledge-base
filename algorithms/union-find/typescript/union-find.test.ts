@@ -43,4 +43,9 @@ describe('UnionFind', () => {
     expect(uf.connected(0, 1)).toBe(true)
     expect(uf.connected(1, 2)).toBe(false)
   })
+  it('エラー: 範囲外インデックスは RangeError を投げる', () => {
+    const uf = new UnionFind(3)
+    expect(() => uf.find(-1)).toThrow(RangeError)
+    expect(() => uf.find(3)).toThrow(RangeError)
+  })
 })

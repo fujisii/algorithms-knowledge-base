@@ -8,6 +8,9 @@ export class UnionFind {
   }
 
   find(x: number): number {
+    if (x < 0 || x >= this.parent.length) {
+      throw new RangeError(`index ${x} out of range [0, ${this.parent.length})`)
+    }
     if (this.parent[x] !== x) {
       this.parent[x] = this.find(this.parent[x])
     }

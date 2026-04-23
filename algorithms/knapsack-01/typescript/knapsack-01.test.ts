@@ -36,4 +36,11 @@ describe('knapsack', () => {
     const items = [{ weight: 3, value: 15 }]
     expect(knapsack(items, 3)).toBe(15)
   })
+  it('境界: weight=0 のアイテムは容量 0 でも選択可能', () => {
+    const items = [{ weight: 0, value: 5 }]
+    expect(knapsack(items, 0)).toBe(5)
+  })
+  it('エラー: capacity < 0 は RangeError を投げる', () => {
+    expect(() => knapsack([], -1)).toThrow(RangeError)
+  })
 })

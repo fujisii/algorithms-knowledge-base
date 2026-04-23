@@ -40,6 +40,11 @@ describe('dijkstra', () => {
     expect(dist.get(1)).toBe(0)
   })
 
+  it('エラー: 負の辺の重みは RangeError を投げる', () => {
+    const graph: WeightedGraph = new Map([[1, [{ to: 2, weight: -1 }]]])
+    expect(() => dijkstra(graph, 1)).toThrow(RangeError)
+  })
+
   it('正常系: 等コストの並列経路で最短距離を正しく選ぶ', () => {
     // 1→2→4 (1+3=4) と 1→3→4 (2+2=4) が同コスト
     const graph: WeightedGraph = new Map([

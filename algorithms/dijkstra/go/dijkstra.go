@@ -2,6 +2,7 @@ package main
 
 import (
 	"container/heap"
+	"fmt"
 	"math"
 )
 
@@ -20,8 +21,8 @@ type minHeap []heapEntry
 func (h minHeap) Len() int            { return len(h) }
 func (h minHeap) Less(i, j int) bool  { return h[i].dist < h[j].dist }
 func (h minHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
-func (h *minHeap) Push(x interface{}) { *h = append(*h, x.(heapEntry)) }
-func (h *minHeap) Pop() interface{} {
+func (h *minHeap) Push(x any) { *h = append(*h, x.(heapEntry)) }
+func (h *minHeap) Pop() any {
 	old := *h
 	n := len(old)
 	x := old[n-1]
@@ -41,6 +42,13 @@ func collectNodes(graph map[int][]Edge, start int) map[int]bool {
 }
 
 func Dijkstra(graph map[int][]Edge, start int) map[int]int {
+	for _, edges := range graph {
+		for _, e := range edges {
+			if e.Weight < 0 {
+				panic(fmt.Sprintf("negative edge weight %d is not supported", e.Weight))
+			}
+		}
+	}
 	nodes := collectNodes(graph, start)
 	dist := make(map[int]int, len(nodes))
 	for node := range nodes {

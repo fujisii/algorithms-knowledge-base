@@ -1,3 +1,3 @@
 module github.com/fujisii/algorithms-knowledge-base
 
-go 1.26
+go 1.24

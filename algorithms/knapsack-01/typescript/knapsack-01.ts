@@ -1,6 +1,7 @@
 export type Item = { weight: number; value: number }
 
 export function knapsack(items: Item[], capacity: number): number {
+  if (capacity < 0) throw new RangeError(`capacity must be >= 0, got ${capacity}`)
   const n = items.length
   const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(capacity + 1).fill(0))
 

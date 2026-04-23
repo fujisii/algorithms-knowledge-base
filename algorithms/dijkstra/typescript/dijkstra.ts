@@ -60,6 +60,11 @@ class MinHeap {
 }
 
 export function dijkstra(graph: WeightedGraph, start: number): Map<number, number> {
+  for (const edges of graph.values()) {
+    for (const { weight } of edges) {
+      if (weight < 0) throw new RangeError(`negative edge weight ${weight} is not supported`)
+    }
+  }
   const nodes = collectNodes(graph, start)
   const dist = new Map<number, number>()
   for (const node of nodes) dist.set(node, Infinity)
