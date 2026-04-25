@@ -3,11 +3,12 @@ package main
 func BFS(graph map[int][]int, start int) []int {
 	visited := map[int]bool{start: true}
 	queue := []int{start}
+	dequeueIndex := 0
 	result := []int{}
 
-	for len(queue) > 0 {
-		node := queue[0]
-		queue = queue[1:]
+	for dequeueIndex < len(queue) {
+		node := queue[dequeueIndex]
+		dequeueIndex++
 		result = append(result, node)
 
 		for _, neighbor := range graph[node] {

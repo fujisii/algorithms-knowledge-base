@@ -2,7 +2,7 @@ package main
 
 func QuickSort(arr []int) []int {
 	if len(arr) <= 1 {
-		return arr
+		return append([]int{}, arr...)
 	}
 
 	pivot := arr[len(arr)/2]

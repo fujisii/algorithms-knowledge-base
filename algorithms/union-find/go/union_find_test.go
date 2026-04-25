@@ -62,12 +62,22 @@ func TestUnionFind(t *testing.T) {
 
 func TestUnionFindPanic(t *testing.T) {
 	uf := NewUnionFind(3)
-	t.Run("範囲外インデックスでパニック", func(t *testing.T) {
-		defer func() {
-			if r := recover(); r == nil {
-				t.Error("範囲外インデックスでパニックが発生するべき")
-			}
-		}()
-		uf.Find(5)
-	})
+	panics := []struct {
+		name string
+		idx  int
+	}{
+		{"上限超過", 5},
+		{"負のインデックス", -1},
+	}
+	for _, tc := range panics {
+		tc := tc
+		t.Run(tc.name+"でパニック", func(t *testing.T) {
+			defer func() {
+				if r := recover(); r == nil {
+					t.Errorf("Find(%d) でパニックが発生するべき", tc.idx)
+				}
+			}()
+			uf.Find(tc.idx)
+		})
+	}
 }

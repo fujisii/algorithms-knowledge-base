@@ -23,4 +23,7 @@ describe('quickSort', () => {
   it('境界: 全要素が同じ', () => {
     expect(quickSort([5, 5, 5, 5])).toEqual([5, 5, 5, 5])
   })
+  it('境界: 負数を含む配列をソートする', () => {
+    expect(quickSort([-3, 1, -1, 2, 0])).toEqual([-3, -1, 0, 1, 2])
+  })
 })

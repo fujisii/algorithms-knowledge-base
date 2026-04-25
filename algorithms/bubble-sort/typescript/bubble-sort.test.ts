@@ -20,4 +20,7 @@ describe('bubbleSort', () => {
   it('境界: 重複要素を含む配列をソートする', () => {
     expect(bubbleSort([3, 1, 2, 1, 3])).toEqual([1, 1, 2, 3, 3])
   })
+  it('境界: 負数を含む配列をソートする', () => {
+    expect(bubbleSort([-3, 1, -1, 2, 0])).toEqual([-3, -1, 0, 1, 2])
+  })
 })

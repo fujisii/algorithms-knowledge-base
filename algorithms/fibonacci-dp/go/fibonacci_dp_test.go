@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestFibonacci(t *testing.T) {
 	tests := []struct {
@@ -29,8 +32,18 @@ func TestFibonacci(t *testing.T) {
 
 func TestFibonacciPanic(t *testing.T) {
 	defer func() {
-		if r := recover(); r == nil {
+		r := recover()
+		if r == nil {
 			t.Error("n < 0 でパニックが発生するべき")
+			return
+		}
+		msg, ok := r.(string)
+		if !ok {
+			t.Errorf("パニック値が string ではない: %T %v", r, r)
+			return
+		}
+		if !strings.Contains(msg, "n must be >= 0") {
+			t.Errorf("予期しないパニックメッセージ: %v", msg)
 		}
 	}()
 	Fibonacci(-1)

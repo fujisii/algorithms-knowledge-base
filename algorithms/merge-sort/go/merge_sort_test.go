@@ -18,6 +18,7 @@ func TestMergeSort(t *testing.T) {
 		{"境界: 単一要素", []int{42}, []int{42}},
 		{"境界: 重複要素あり", []int{3, 3, 1, 1, 2, 2}, []int{1, 1, 2, 2, 3, 3}},
 		{"境界: 2要素", []int{2, 1}, []int{1, 2}},
+		{"境界: 負数を含む", []int{-3, 1, -1, 2, 0}, []int{-3, -1, 0, 1, 2}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

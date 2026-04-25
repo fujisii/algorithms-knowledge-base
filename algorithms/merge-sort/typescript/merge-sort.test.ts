@@ -23,4 +23,7 @@ describe('mergeSort', () => {
   it('境界: 2要素', () => {
     expect(mergeSort([2, 1])).toEqual([1, 2])
   })
+  it('境界: 負数を含む配列をソートする', () => {
+    expect(mergeSort([-3, 1, -1, 2, 0])).toEqual([-3, -1, 0, 1, 2])
+  })
 })
