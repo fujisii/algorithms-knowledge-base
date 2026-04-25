@@ -43,4 +43,7 @@ describe('knapsack', () => {
   it('エラー: capacity < 0 は RangeError を投げる', () => {
     expect(() => knapsack([], -1)).toThrow(RangeError)
   })
+  it('エラー: weight < 0 のアイテムは RangeError を投げる', () => {
+    expect(() => knapsack([{ weight: -1, value: 5 }], 10)).toThrow(RangeError)
+  })
 })

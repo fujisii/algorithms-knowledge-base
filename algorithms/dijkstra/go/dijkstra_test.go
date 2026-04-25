@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -72,8 +73,18 @@ func TestDijkstra(t *testing.T) {
 
 func TestDijkstraNegativeWeightPanic(t *testing.T) {
 	defer func() {
-		if r := recover(); r == nil {
+		r := recover()
+		if r == nil {
 			t.Error("負の辺の重みでパニックが発生するべき")
+			return
+		}
+		msg, ok := r.(string)
+		if !ok {
+			t.Errorf("パニック値が string ではない: %T %v", r, r)
+			return
+		}
+		if !strings.Contains(msg, "negative edge weight") {
+			t.Errorf("予期しないパニックメッセージ: %v", msg)
 		}
 	}()
 	graph := map[int][]Edge{

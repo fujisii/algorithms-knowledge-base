@@ -48,14 +48,14 @@ cp "$TEMPLATES_DIR/go/algorithm_test.go" "$ALGO_DIR/go/${SNAKE}_test.go"
 cp "$TEMPLATES_DIR/go/run.go" "$ALGO_DIR/go/run.go"
 
 # replace placeholders in all copied files (POSIX sed — works on macOS and Linux)
-find "$ALGO_DIR" -type f | while read -r file; do
+while IFS= read -r -d '' file; do
   tmp=$(mktemp)
   sed -e "s/{{ALGORITHM_NAME_PASCAL}}/$PASCAL/g" \
       -e "s/{{ALGORITHM_NAME_CAMEL}}/$CAMEL/g" \
       -e "s/{{ALGORITHM_NAME_SNAKE}}/$SNAKE/g" \
       -e "s/{{ALGORITHM_NAME}}/$NAME/g" \
       "$file" > "$tmp" && mv "$tmp" "$file"
-done
+done < <(find "$ALGO_DIR" -type f -print0)
 
 # warn if any unreplaced placeholders remain
 remaining="$(grep -rl '{{' "$ALGO_DIR" 2>/dev/null || true)"

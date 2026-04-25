@@ -66,14 +66,33 @@ func TestKnapsack(t *testing.T) {
 }
 
 func TestKnapsackPanic(t *testing.T) {
-	defer func() {
-		r := recover()
-		if r == nil {
-			t.Error("capacity < 0 でパニックが発生するべき")
-		}
-		if msg, ok := r.(string); ok && !strings.Contains(msg, "capacity must be >= 0") {
-			t.Errorf("予期しないパニックメッセージ: %v", r)
-		}
-	}()
-	Knapsack([]Item{}, -1)
+	tests := []struct {
+		name    string
+		items   []Item
+		cap     int
+		wantMsg string
+	}{
+		{"capacity < 0", []Item{}, -1, "capacity must be >= 0"},
+		{"weight < 0", []Item{{Weight: -1, Value: 5}}, 10, "item weight must be >= 0"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			defer func() {
+				r := recover()
+				if r == nil {
+					t.Error("パニックが発生するべき")
+					return
+				}
+				msg, ok := r.(string)
+				if !ok {
+					t.Errorf("パニック値が string ではない: %T %v", r, r)
+					return
+				}
+				if !strings.Contains(msg, tt.wantMsg) {
+					t.Errorf("予期しないパニックメッセージ: %v", msg)
+				}
+			}()
+			Knapsack(tt.items, tt.cap)
+		})
+	}
 }
