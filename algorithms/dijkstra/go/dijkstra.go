@@ -30,6 +30,8 @@ func (h *minHeap) Pop() any {
 	return x
 }
 
+// グラフ定義に現れる全ノード（到達不可能なものを含む）を収集する。
+// 戻り値の dist には未到達ノードも math.MaxInt で含まれる仕様。
 func collectNodes(graph map[int][]Edge, start int) map[int]bool {
 	nodes := map[int]bool{start: true}
 	for node, edges := range graph {

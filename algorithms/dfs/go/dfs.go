@@ -1,5 +1,6 @@
 package main
 
+// graph は読み取り専用で使用する（Go に ReadonlyMap 相当はないため、変更しない前提）。
 func DFS(graph map[int][]int, start int) []int {
 	visited := map[int]bool{}
 	result := []int{}

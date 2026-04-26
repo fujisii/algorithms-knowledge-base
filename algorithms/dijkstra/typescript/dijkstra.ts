@@ -3,6 +3,8 @@ export type WeightedGraph = Map<number, Edge[]>
 
 type HeapEntry = { node: number; dist: number }
 
+// グラフ定義に現れる全ノード（到達不可能なものを含む）を収集する。
+// 戻り値の dist には未到達ノードも Infinity で含まれる仕様。
 function collectNodes(graph: WeightedGraph, start: number): Set<number> {
   const nodes = new Set<number>([start])
   for (const [node, edges] of graph) {

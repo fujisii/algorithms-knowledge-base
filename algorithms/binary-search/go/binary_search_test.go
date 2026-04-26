@@ -25,4 +25,11 @@ func TestBinarySearch(t *testing.T) {
 			}
 		})
 	}
+
+	t.Run("正常系: 重複要素あり（有効なインデックスのいずれかを返す）", func(t *testing.T) {
+		idx := BinarySearch([]int{1, 3, 3, 3, 5}, 3)
+		if idx < 1 || idx > 3 {
+			t.Errorf("got %v; want index in [1, 3]", idx)
+		}
+	})
 }

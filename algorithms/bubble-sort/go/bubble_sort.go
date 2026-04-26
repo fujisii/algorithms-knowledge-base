@@ -1,5 +1,7 @@
 package main
 
+// 早期終了最適化（内側ループでスワップが0回なら break）は省略。
+// 最悪ケースの O(n²) を常に実行する素朴な実装。
 func BubbleSort(arr []int) []int {
 	result := make([]int, len(arr))
 	copy(result, arr)

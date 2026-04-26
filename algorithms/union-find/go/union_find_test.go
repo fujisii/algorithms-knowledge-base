@@ -58,6 +58,18 @@ func TestUnionFind(t *testing.T) {
 			t.Error("0は自分自身と接続されるべき")
 		}
 	})
+
+	t.Run("べき等性: 同じ union を複数回呼んでも副作用がない", func(t *testing.T) {
+		uf := NewUnionFind(3)
+		uf.Union(0, 1)
+		uf.Union(0, 1)
+		if !uf.Connected(0, 1) {
+			t.Error("0と1は接続されるべき")
+		}
+		if uf.Connected(1, 2) {
+			t.Error("1と2は未接続であるべき")
+		}
+	})
 }
 
 func TestUnionFindPanic(t *testing.T) {
