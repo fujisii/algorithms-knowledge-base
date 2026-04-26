@@ -81,7 +81,7 @@ export function dijkstra(graph: WeightedGraph, start: number): Map<number, numbe
 
     for (const { to, weight } of graph.get(u) ?? []) {
       const newDist = du + weight
-      const toDist = dist.get(to) ?? Infinity
+      const toDist = dist.get(to)!
       if (newDist < toDist) {
         dist.set(to, newDist)
         heap.push({ node: to, dist: newDist })

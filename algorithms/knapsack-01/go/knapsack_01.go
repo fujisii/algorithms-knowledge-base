@@ -7,6 +7,7 @@ type Item struct {
 	Value  int
 }
 
+// エラー伝達に panic を使用している（学習用途での可読性優先）。
 func Knapsack(items []Item, capacity int) int {
 	if capacity < 0 {
 		panic(fmt.Errorf("capacity must be >= 0, got %d", capacity))
