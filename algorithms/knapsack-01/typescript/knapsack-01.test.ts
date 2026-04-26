@@ -40,6 +40,11 @@ describe('knapsack', () => {
     const items = [{ weight: 0, value: 5 }]
     expect(knapsack(items, 0)).toBe(5)
   })
+  it('境界: 同一アイテムは1個のみ選択可能（0-1制約）', () => {
+    // 容量6に対して重さ3・価値10のアイテム1種: 2個取れるが0-1なので10
+    const items = [{ weight: 3, value: 10 }]
+    expect(knapsack(items, 6)).toBe(10)
+  })
   it('エラー: capacity < 0 は RangeError を投げる', () => {
     expect(() => knapsack([], -1)).toThrow(RangeError)
   })

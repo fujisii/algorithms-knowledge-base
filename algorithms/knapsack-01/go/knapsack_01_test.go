@@ -54,6 +54,13 @@ func TestKnapsack(t *testing.T) {
 			0,
 			5,
 		},
+		{
+			// 容量6に対して重さ3・価値10のアイテム1種: 2個取れるが0-1なので10
+			"境界: 同一アイテムは1個のみ選択可能（0-1制約）",
+			[]Item{{Weight: 3, Value: 10}},
+			6,
+			10,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

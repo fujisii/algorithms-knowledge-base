@@ -49,6 +49,12 @@ describe('dijkstra', () => {
     expect(dist.get(2)).toBe(0)
   })
 
+  it('境界: グラフ未登録ノードへの問い合わせは undefined を返す', () => {
+    const graph: WeightedGraph = new Map([[1, [{ to: 2, weight: 1 }]], [2, []]])
+    const dist = dijkstra(graph, 1)
+    expect(dist.get(99)).toBeUndefined()
+  })
+
   it('エラー: 負の辺の重みは RangeError を投げる', () => {
     const graph: WeightedGraph = new Map([[1, [{ to: 2, weight: -1 }]]])
     expect(() => dijkstra(graph, 1)).toThrow(RangeError)

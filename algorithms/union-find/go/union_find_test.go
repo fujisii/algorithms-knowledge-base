@@ -111,7 +111,7 @@ func TestUnionFindPanic(t *testing.T) {
 	}
 	for _, tc := range panics {
 		tc := tc
-		t.Run("Union: "+tc.name+"でパニック", func(t *testing.T) {
+		t.Run("Union: 第1引数 "+tc.name+"でパニック", func(t *testing.T) {
 			defer func() {
 				r := recover()
 				if r == nil {
@@ -123,6 +123,29 @@ func TestUnionFindPanic(t *testing.T) {
 				}
 			}()
 			uf.Union(tc.idx, 0)
+		})
+	}
+	secondArgPanics := []struct {
+		name string
+		y    int
+	}{
+		{"上限超過", 3},
+		{"負のインデックス", -1},
+	}
+	for _, tc := range secondArgPanics {
+		tc := tc
+		t.Run("Union: 第2引数 "+tc.name+"でパニック", func(t *testing.T) {
+			defer func() {
+				r := recover()
+				if r == nil {
+					t.Errorf("Union(0, %d) でパニックが発生するべき", tc.y)
+					return
+				}
+				if _, ok := r.(error); !ok {
+					t.Errorf("パニック値が error ではない: %T %v", r, r)
+				}
+			}()
+			uf.Union(0, tc.y)
 		})
 	}
 }
