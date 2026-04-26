@@ -72,6 +72,18 @@ func TestUnionFind(t *testing.T) {
 	})
 }
 
+func TestUnionFindSizeZero(t *testing.T) {
+	t.Run("境界: size=0 で Find(0) はパニック", func(t *testing.T) {
+		uf := NewUnionFind(0)
+		defer func() {
+			if r := recover(); r == nil {
+				t.Error("Find(0) でパニックが発生するべき")
+			}
+		}()
+		uf.Find(0)
+	})
+}
+
 func TestUnionFindPanic(t *testing.T) {
 	uf := NewUnionFind(3)
 	panics := []struct {

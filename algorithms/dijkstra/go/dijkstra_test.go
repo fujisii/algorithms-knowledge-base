@@ -72,7 +72,10 @@ func TestDijkstra(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := Dijkstra(tt.graph, tt.start)
+			got, err := Dijkstra(tt.graph, tt.start)
+			if err != nil {
+				t.Fatalf("予期しないエラー: %v", err)
+			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Dijkstra() = %v; want %v", got, tt.want)
 			}
@@ -80,24 +83,15 @@ func TestDijkstra(t *testing.T) {
 	}
 }
 
-func TestDijkstraNegativeWeightPanic(t *testing.T) {
-	defer func() {
-		r := recover()
-		if r == nil {
-			t.Error("負の辺の重みでパニックが発生するべき")
-			return
-		}
-		err, ok := r.(error)
-		if !ok {
-			t.Errorf("パニック値が error ではない: %T %v", r, r)
-			return
-		}
-		if !strings.Contains(err.Error(), "negative edge weight") {
-			t.Errorf("予期しないパニックメッセージ: %v", err)
-		}
-	}()
+func TestDijkstraNegativeWeight(t *testing.T) {
 	graph := map[int][]Edge{
 		1: {{To: 2, Weight: -1}},
 	}
-	Dijkstra(graph, 1)
+	_, err := Dijkstra(graph, 1)
+	if err == nil {
+		t.Fatal("負の辺の重みでエラーが返されるべき")
+	}
+	if !strings.Contains(err.Error(), "negative edge weight") {
+		t.Errorf("予期しないエラーメッセージ: %v", err)
+	}
 }

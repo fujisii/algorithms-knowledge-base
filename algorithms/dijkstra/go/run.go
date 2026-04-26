@@ -9,7 +9,11 @@ func main() {
 		3: {{To: 4, Weight: 1}},
 		4: {},
 	}
-	dist := Dijkstra(graph, 1)
+	dist, err := Dijkstra(graph, 1)
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+		return
+	}
 	fmt.Println("Dijkstra(graph, 1):")
 	for node, d := range dist {
 		fmt.Printf("  node %d: %d\n", node, d)

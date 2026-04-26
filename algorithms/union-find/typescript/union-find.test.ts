@@ -43,6 +43,10 @@ describe('UnionFind', () => {
     expect(uf.connected(0, 1)).toBe(true)
     expect(uf.connected(1, 2)).toBe(false)
   })
+  it('境界: size=0 で初期化した場合 find(0) は RangeError を投げる', () => {
+    const uf = new UnionFind(0)
+    expect(() => uf.find(0)).toThrow(RangeError)
+  })
   it('エラー: 範囲外インデックスは RangeError を投げる', () => {
     const uf = new UnionFind(3)
     expect(() => uf.find(-1)).toThrow(RangeError)

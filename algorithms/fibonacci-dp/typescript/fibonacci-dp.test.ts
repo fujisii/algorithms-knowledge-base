@@ -24,6 +24,12 @@ describe('fibonacci', () => {
     // F(79) 以降は IEEE 754 倍精度の精度限界(2^53-1)を超えるため結果が不正確になる
     expect(fibonacci(78)).toBe(8944394323791464)
   })
+  it('境界: n=79 は精度限界を超えるため真値と一致しない（ドキュメント目的）', () => {
+    // 真値 F(79) = 14472334024676221 だが IEEE 754 倍精度では 14472334024676220 に丸められる
+    // JS の number では両値が同一 double になるため BigInt で比較する
+    const result = fibonacci(79)
+    expect(BigInt(result)).not.toBe(14472334024676221n)
+  })
   it('エラー: n < 0 は RangeError を投げる', () => {
     expect(() => fibonacci(-1)).toThrow(RangeError)
   })

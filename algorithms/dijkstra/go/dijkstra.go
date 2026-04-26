@@ -43,11 +43,11 @@ func collectNodes(graph map[int][]Edge, start int) map[int]bool {
 	return nodes
 }
 
-func Dijkstra(graph map[int][]Edge, start int) map[int]int {
+func Dijkstra(graph map[int][]Edge, start int) (map[int]int, error) {
 	for _, edges := range graph {
 		for _, e := range edges {
 			if e.Weight < 0 {
-				panic(fmt.Errorf("negative edge weight %d is not supported", e.Weight))
+				return nil, fmt.Errorf("negative edge weight %d is not supported", e.Weight)
 			}
 		}
 	}
@@ -79,5 +79,5 @@ func Dijkstra(graph map[int][]Edge, start int) map[int]int {
 		}
 	}
 
-	return dist
+	return dist, nil
 }

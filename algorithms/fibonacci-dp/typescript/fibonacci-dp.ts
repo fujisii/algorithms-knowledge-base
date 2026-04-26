@@ -1,4 +1,4 @@
-// n >= 79 以上では IEEE 754 倍精度の精度限界(2^53-1)を超えるため結果が不正確になる
+// n >= 79 では IEEE 754 倍精度の精度限界(2^53-1)を超えるため結果が不正確になる
 export function fibonacci(n: number): number {
   if (n < 0) throw new RangeError(`n must be >= 0, got ${n}`)
   if (n === 0) return 0
