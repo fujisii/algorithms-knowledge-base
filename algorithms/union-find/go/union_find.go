@@ -16,6 +16,8 @@ func NewUnionFind(size int) *UnionFind {
 	return &UnionFind{parent: parent, rank: rank}
 }
 
+// エラー伝達に panic を使用している（学習用途での可読性優先）。
+// ライブラリとして使用する場合は (int, error) を返す形式が推奨される。
 func (uf *UnionFind) Find(x int) int {
 	if x < 0 || x >= len(uf.parent) {
 		panic(fmt.Errorf("index %d out of range [0, %d)", x, len(uf.parent)))
