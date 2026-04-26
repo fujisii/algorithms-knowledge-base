@@ -47,6 +47,9 @@ for algo_dir in "$ALGORITHMS_DIR"/*/; do
     if grep -A 10 "^## 参考文献" "$readme" | grep -q "TODO"; then
       errors+=("参考文献セクションに TODO が残っています")
     fi
+    if ! grep -A 20 "^## 参考文献" "$readme" | grep -qE '\([0-9]{4}\)|\*[^*]+\*'; then
+      errors+=("参考文献に一次ソース（著者・年・書名）が見つかりません")
+    fi
   fi
 
   if [ "${#errors[@]}" -gt 0 ]; then

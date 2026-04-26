@@ -66,7 +66,7 @@ func TestUnionFindPanic(t *testing.T) {
 		name string
 		idx  int
 	}{
-		{"上限超過", 5},
+		{"上限超過", 3}, // size=3 の場合、有効範囲は [0,2]、3 が最小の超過値
 		{"負のインデックス", -1},
 	}
 	for _, tc := range panics {

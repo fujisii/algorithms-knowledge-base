@@ -2,6 +2,7 @@ export function dfs(graph: ReadonlyMap<number, readonly number[]>, start: number
   const visited = new Set<number>()
   const result: number[] = []
 
+  // 深いグラフではコールスタック上限を超えスタックオーバーフローになりうる
   function visit(node: number): void {
     if (visited.has(node)) return
     visited.add(node)
