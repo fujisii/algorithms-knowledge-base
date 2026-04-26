@@ -71,13 +71,34 @@ func TestUnionFindPanic(t *testing.T) {
 	}
 	for _, tc := range panics {
 		tc := tc
-		t.Run(tc.name+"でパニック", func(t *testing.T) {
+		t.Run("Find: "+tc.name+"でパニック", func(t *testing.T) {
 			defer func() {
-				if r := recover(); r == nil {
+				r := recover()
+				if r == nil {
 					t.Errorf("Find(%d) でパニックが発生するべき", tc.idx)
+					return
+				}
+				if _, ok := r.(error); !ok {
+					t.Errorf("パニック値が error ではない: %T %v", r, r)
 				}
 			}()
 			uf.Find(tc.idx)
+		})
+	}
+	for _, tc := range panics {
+		tc := tc
+		t.Run("Union: "+tc.name+"でパニック", func(t *testing.T) {
+			defer func() {
+				r := recover()
+				if r == nil {
+					t.Errorf("Union(%d, 0) でパニックが発生するべき", tc.idx)
+					return
+				}
+				if _, ok := r.(error); !ok {
+					t.Errorf("パニック値が error ではない: %T %v", r, r)
+				}
+			}()
+			uf.Union(tc.idx, 0)
 		})
 	}
 }

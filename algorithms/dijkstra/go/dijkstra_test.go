@@ -78,13 +78,13 @@ func TestDijkstraNegativeWeightPanic(t *testing.T) {
 			t.Error("負の辺の重みでパニックが発生するべき")
 			return
 		}
-		msg, ok := r.(string)
+		err, ok := r.(error)
 		if !ok {
-			t.Errorf("パニック値が string ではない: %T %v", r, r)
+			t.Errorf("パニック値が error ではない: %T %v", r, r)
 			return
 		}
-		if !strings.Contains(msg, "negative edge weight") {
-			t.Errorf("予期しないパニックメッセージ: %v", msg)
+		if !strings.Contains(err.Error(), "negative edge weight") {
+			t.Errorf("予期しないパニックメッセージ: %v", err)
 		}
 	}()
 	graph := map[int][]Edge{

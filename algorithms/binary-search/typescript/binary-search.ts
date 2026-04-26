@@ -1,3 +1,4 @@
+// 前提: arr はソート済みであること。未ソート配列を渡した場合の結果は保証されない
 export function binarySearch(arr: readonly number[], target: number): number {
   let left = 0
   let right = arr.length - 1

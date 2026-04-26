@@ -83,13 +83,13 @@ func TestKnapsackPanic(t *testing.T) {
 					t.Error("パニックが発生するべき")
 					return
 				}
-				msg, ok := r.(string)
+				err, ok := r.(error)
 				if !ok {
-					t.Errorf("パニック値が string ではない: %T %v", r, r)
+					t.Errorf("パニック値が error ではない: %T %v", r, r)
 					return
 				}
-				if !strings.Contains(msg, tt.wantMsg) {
-					t.Errorf("予期しないパニックメッセージ: %v", msg)
+				if !strings.Contains(err.Error(), tt.wantMsg) {
+					t.Errorf("予期しないパニックメッセージ: %v", err)
 				}
 			}()
 			Knapsack(tt.items, tt.cap)

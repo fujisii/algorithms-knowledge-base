@@ -4,7 +4,7 @@ import "fmt"
 
 func Fibonacci(n int) int {
 	if n < 0 {
-		panic(fmt.Sprintf("n must be >= 0, got %d", n))
+		panic(fmt.Errorf("n must be >= 0, got %d", n))
 	}
 	if n == 0 {
 		return 0

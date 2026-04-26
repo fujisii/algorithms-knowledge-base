@@ -37,13 +37,13 @@ func TestFibonacciPanic(t *testing.T) {
 			t.Error("n < 0 でパニックが発生するべき")
 			return
 		}
-		msg, ok := r.(string)
+		err, ok := r.(error)
 		if !ok {
-			t.Errorf("パニック値が string ではない: %T %v", r, r)
+			t.Errorf("パニック値が error ではない: %T %v", r, r)
 			return
 		}
-		if !strings.Contains(msg, "n must be >= 0") {
-			t.Errorf("予期しないパニックメッセージ: %v", msg)
+		if !strings.Contains(err.Error(), "n must be >= 0") {
+			t.Errorf("予期しないパニックメッセージ: %v", err)
 		}
 	}()
 	Fibonacci(-1)

@@ -9,11 +9,11 @@ type Item struct {
 
 func Knapsack(items []Item, capacity int) int {
 	if capacity < 0 {
-		panic(fmt.Sprintf("capacity must be >= 0, got %d", capacity))
+		panic(fmt.Errorf("capacity must be >= 0, got %d", capacity))
 	}
 	for _, item := range items {
 		if item.Weight < 0 {
-			panic(fmt.Sprintf("item weight must be >= 0, got %d", item.Weight))
+			panic(fmt.Errorf("item weight must be >= 0, got %d", item.Weight))
 		}
 	}
 	n := len(items)

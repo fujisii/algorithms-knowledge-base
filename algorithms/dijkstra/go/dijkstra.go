@@ -45,7 +45,7 @@ func Dijkstra(graph map[int][]Edge, start int) map[int]int {
 	for _, edges := range graph {
 		for _, e := range edges {
 			if e.Weight < 0 {
-				panic(fmt.Sprintf("negative edge weight %d is not supported", e.Weight))
+				panic(fmt.Errorf("negative edge weight %d is not supported", e.Weight))
 			}
 		}
 	}
