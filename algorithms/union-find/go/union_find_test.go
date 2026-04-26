@@ -1,0 +1,151 @@
+package main
+
+import "testing"
+
+func TestUnionFind(t *testing.T) {
+	t.Run("初期状態: 異なる要素は未接続", func(t *testing.T) {
+		uf := NewUnionFind(5)
+		if uf.Connected(0, 1) {
+			t.Error("0と1は未接続であるべき")
+		}
+		if uf.Connected(2, 4) {
+			t.Error("2と4は未接続であるべき")
+		}
+	})
+
+	t.Run("union後: 結合された要素はconnected", func(t *testing.T) {
+		uf := NewUnionFind(5)
+		uf.Union(0, 1)
+		if !uf.Connected(0, 1) {
+			t.Error("0と1は接続されるべき")
+		}
+	})
+
+	t.Run("推移的接続: 中間ノードを経由して接続される", func(t *testing.T) {
+		uf := NewUnionFind(5)
+		uf.Union(0, 1)
+		uf.Union(1, 2)
+		if !uf.Connected(0, 2) {
+			t.Error("0と2は接続されるべき")
+		}
+	})
+
+	t.Run("別グループ: union されていない要素は未接続", func(t *testing.T) {
+		uf := NewUnionFind(5)
+		uf.Union(0, 1)
+		uf.Union(3, 4)
+		if uf.Connected(0, 3) {
+			t.Error("0と3は未接続であるべき")
+		}
+	})
+
+	t.Run("全接続: 連鎖union後すべての要素が接続される", func(t *testing.T) {
+		uf := NewUnionFind(4)
+		uf.Union(0, 1)
+		uf.Union(1, 2)
+		uf.Union(2, 3)
+		pairs := []struct{ x, y int }{{0, 3}, {1, 3}, {0, 2}}
+		for _, p := range pairs {
+			if !uf.Connected(p.x, p.y) {
+				t.Errorf("%dと%dは接続されるべき", p.x, p.y)
+			}
+		}
+	})
+
+	t.Run("自己参照: 同じ要素同士は常にconnected", func(t *testing.T) {
+		uf := NewUnionFind(3)
+		if !uf.Connected(0, 0) {
+			t.Error("0は自分自身と接続されるべき")
+		}
+	})
+
+	t.Run("べき等性: 同じ union を複数回呼んでも副作用がない", func(t *testing.T) {
+		uf := NewUnionFind(3)
+		uf.Union(0, 1)
+		uf.Union(0, 1)
+		if !uf.Connected(0, 1) {
+			t.Error("0と1は接続されるべき")
+		}
+		if uf.Connected(1, 2) {
+			t.Error("1と2は未接続であるべき")
+		}
+	})
+}
+
+func TestUnionFindSizeZero(t *testing.T) {
+	t.Run("境界: size=0 で Find(0) はパニック", func(t *testing.T) {
+		uf := NewUnionFind(0)
+		defer func() {
+			if r := recover(); r == nil {
+				t.Error("Find(0) でパニックが発生するべき")
+			}
+		}()
+		uf.Find(0)
+	})
+}
+
+func TestUnionFindPanic(t *testing.T) {
+	uf := NewUnionFind(3)
+	panics := []struct {
+		name string
+		idx  int
+	}{
+		{"上限超過", 3}, // size=3 の場合、有効範囲は [0,2]、3 が最小の超過値
+		{"負のインデックス", -1},
+	}
+	for _, tc := range panics {
+		tc := tc
+		t.Run("Find: "+tc.name+"でパニック", func(t *testing.T) {
+			defer func() {
+				r := recover()
+				if r == nil {
+					t.Errorf("Find(%d) でパニックが発生するべき", tc.idx)
+					return
+				}
+				if _, ok := r.(error); !ok {
+					t.Errorf("パニック値が error ではない: %T %v", r, r)
+				}
+			}()
+			uf.Find(tc.idx)
+		})
+	}
+	for _, tc := range panics {
+		tc := tc
+		t.Run("Union: 第1引数 "+tc.name+"でパニック", func(t *testing.T) {
+			defer func() {
+				r := recover()
+				if r == nil {
+					t.Errorf("Union(%d, 0) でパニックが発生するべき", tc.idx)
+					return
+				}
+				if _, ok := r.(error); !ok {
+					t.Errorf("パニック値が error ではない: %T %v", r, r)
+				}
+			}()
+			uf.Union(tc.idx, 0)
+		})
+	}
+	secondArgPanics := []struct {
+		name string
+		y    int
+	}{
+		{"上限超過", 3},
+		{"負のインデックス", -1},
+	}
+	for _, tc := range secondArgPanics {
+		tc := tc
+		t.Run("Union: 第2引数 "+tc.name+"でパニック", func(t *testing.T) {
+			defer func() {
+				r := recover()
+				if r == nil {
+					t.Errorf("Union(0, %d) でパニックが発生するべき", tc.y)
+					return
+				}
+				if _, ok := r.(error); !ok {
+					t.Errorf("パニック値が error ではない: %T %v", r, r)
+				}
+			}()
+			uf.Union(0, tc.y)
+		})
+	}
+}
